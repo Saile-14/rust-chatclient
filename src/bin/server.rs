@@ -1,12 +1,11 @@
-use std::arch::x86_64::_CMP_FALSE_OQ;
 use std::io::{BufRead, BufReader, Write};
 use std::net::{TcpListener,TcpStream};
-use std::sync::{mpsc, Arc, Mutex};
-use std::{thread, vec};
+use std::sync::{ Arc, Mutex};
+use std::{thread};
 
 fn handle_client(stream: TcpStream, peers: Arc<Mutex<Vec<std::net::TcpStream>>>)
 {
-    let mut writer = stream.try_clone().unwrap();
+    let writer = stream.try_clone().unwrap();
     let addr = stream.peer_addr().unwrap();
     let reader = BufReader::new(stream.try_clone().unwrap());
 
